@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import "./Calculator.css";
 
 const btns = [
@@ -35,8 +34,13 @@ function Calculator() {
         break;
       case "=":
         const result = eval(display);
-        setDisplay(result);
-        break;
+        if (result) {
+          setDisplay(result);
+          break;
+        } else {
+          break;
+        }
+
       case ".":
         const lastNum = display.split(" ").slice(-1)[0];
         if (!lastNum.includes(btn)) {
@@ -50,6 +54,7 @@ function Calculator() {
         } else if ("×/+".includes(btn) && "×/+".includes(lastPressed)) {
           e = display.slice(0, -3) + ` ${btn === "×" ? "*" : btn} `;
         } else if (/[\/*+-]\s\s-/.test(display)) {
+          console.log("hola1");
           if (btn === "-") {
             e = display;
           } else {
